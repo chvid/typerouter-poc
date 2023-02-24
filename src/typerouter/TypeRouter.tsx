@@ -7,11 +7,10 @@ import { DefaultErrorElement } from "./components/DefaultErrorElement";
 import { DefaultNotFoundElement } from "./components/DefaultNotFoundElement";
 import { Routes } from "./Routes";
 import { RouteFunction } from "./RouteFunction";
-import { Mounted } from "./Mounted";
 
 const filterPath = (path: string): string => (path.startsWith("/") ? path.substring(1) : path);
 
-const findMatch = (routes: Mounted<Routes>, path: string[]): { route?: RouteFunction; parameters: string[] } => {
+const findMatch = (routes: Routes, path: string[]): { route?: RouteFunction; parameters: string[] } => {
   if (path.length == 1 && path[0] == "" && routes["index"] instanceof Function) {
     return { route: routes["index"], parameters: [] };
   }
@@ -32,7 +31,7 @@ const findMatch = (routes: Mounted<Routes>, path: string[]): { route?: RouteFunc
 };
 
 export const TypeRouter: React.FC<{
-  routes: Mounted<Routes>;
+  routes: Routes;
   loadingElement?: React.ComponentType;
   errorElement?: React.FC<{ error: any }>;
   notFoundElement?: React.ComponentType;
@@ -69,9 +68,7 @@ export const TypeRouter: React.FC<{
     }
   };
   useEffect(() => {
-    (async () => {
-      await invokeRoute(hash);
-    })();
+    invokeRoute(hash);
   }, []);
   useEffect(() => {
     const updateHash = async () => {

@@ -3,9 +3,9 @@ import { CreateBlogEntry } from "./pages/CreateBlogEntry";
 import { EditBlogEntry } from "./pages/EditBlogEntry";
 import { GetBlogEntry } from "./pages/GetBlogEntry";
 import { ListBlogEntries } from "./pages/ListBlogEntries";
-import { setupRouting } from "./typerouter/setupRouting";
+import { createLinks } from "./typerouter/createLinks";
 
-export const [routes, links] = setupRouting({
+export const routes = {
   index: async () => {
     const entries = await api.blog.entries();
     return <ListBlogEntries entries={entries} />;
@@ -21,4 +21,6 @@ export const [routes, links] = setupRouting({
       return <EditBlogEntry entry={entry} />;
     }
   }
-});
+};
+
+export const links = createLinks(routes);
