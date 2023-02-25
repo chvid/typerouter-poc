@@ -3,7 +3,7 @@ import React from "react";
 import { links } from "../routing";
 import { BlogEntry } from "../api";
 
-export const ListBlogEntries: React.FC<{ entries: BlogEntry[] }> = ({ entries }) => (
+export const ListBlogEntriesPage: React.FC<{ entries: BlogEntry[] }> = ({ entries }) => (
   <>
     <ul>
       {entries.map((e, i) => (

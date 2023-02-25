@@ -1,6 +1,6 @@
 import React from "react";
 
-export const DefaultLoadingOverlayElement: React.FC = () => (
+export const DefaultLoadingIndicator: React.FC = () => (
   <div
     style={{
       position: "fixed",
@@ -23,7 +23,7 @@ export const DefaultLoadingOverlayElement: React.FC = () => (
     >
       <svg width="200" height="200" viewBox="0 0 50 50">
         <path fill="#000000" d="M25.251,6.461c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615V6.461z" opacity={0.5}>
-          <animate attributeName="opacity" values="0.1;0.5" dur="0.5s" />
+          <animate attributeName="opacity" values="0.1;0.5" dur="1s" />
           <animateTransform
             attributeType="xml"
             attributeName="transform"

@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 
 import { Location } from "./Location";
 
-import { DefaultLoadingOverlayElement } from "./components/DefaultLoadingOverlayElement";
-import { DefaultErrorElement } from "./components/DefaultErrorElement";
-import { DefaultNotFoundElement } from "./components/DefaultNotFoundElement";
+import { DefaultLoadingIndicator } from "./components/DefaultLoadingIndicator";
+import { DefaultErrorPage } from "./components/DefaultErrorPage";
+import { DefaultNotFoundPage } from "./components/DefaultNotFoundPage";
 import { Routes } from "./Routes";
 import { RouteFunction } from "./RouteFunction";
 
@@ -20,7 +20,7 @@ const findMatch = (routes: Routes, path: string[]): { route?: RouteFunction; par
       route: entry,
       parameters: path
         .slice(1)
-        .map(s => decodeURIComponent(s))
+        .map(decodeURIComponent)
         .map(s => JSON.parse(s))
     };
   }
@@ -32,39 +32,26 @@ const findMatch = (routes: Routes, path: string[]): { route?: RouteFunction; par
 
 export const TypeRouter: React.FC<{
   routes: Routes;
-  loadingElement?: React.ComponentType;
-  errorElement?: React.FC<{ error: any }>;
-  notFoundElement?: React.ComponentType;
-  loadingOverlayElement?: React.ComponentType;
-}> = ({
-  routes,
-  loadingElement,
-  errorElement = DefaultErrorElement,
-  notFoundElement = DefaultNotFoundElement,
-  loadingOverlayElement = DefaultLoadingOverlayElement
-}) => {
+  errorPage?: React.FC<{ error: any }>;
+  notFoundPage?: React.ComponentType;
+  loadingIndicator?: React.ComponentType;
+}> = ({ routes, errorPage = DefaultErrorPage, notFoundPage = DefaultNotFoundPage, loadingIndicator = DefaultLoadingIndicator }) => {
   const [hash, setHash] = useState(() => location.hash.substring(1));
   const [element, setElement] = useState<any>(undefined);
   const [overlay, setOverlay] = useState<any>(undefined);
   const invokeRoute = async (path: string) => {
-    if (loadingElement) {
-      setElement(loadingElement);
-    } else {
-      setOverlay(loadingOverlayElement);
-    }
+    setOverlay(loadingIndicator);
     try {
       const { route, parameters } = findMatch(routes, filterPath(path).split("/"));
       if (route) {
         setElement(await (route as any)(...parameters));
       } else {
-        setElement(notFoundElement);
+        setElement(notFoundPage);
       }
     } catch (error) {
-      setElement(errorElement({ error }));
+      setElement(errorPage({ error }));
     } finally {
-      if (!loadingElement) {
-        setOverlay(undefined);
-      }
+      setOverlay(undefined);
     }
   };
   useEffect(() => {

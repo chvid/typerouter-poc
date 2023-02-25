@@ -3,9 +3,13 @@ import React from "react";
 import { links } from "../routing";
 import { api } from "../api";
 
-export const CreateBlogEntry = () => {
+export const CreateBlogEntryPage: React.FC = () => {
   const [title, setTitle] = React.useState("");
   const [body, setBody] = React.useState("");
+  const save = async () => {
+    const id = await api.blog.create({ title, body });
+    window.location.hash = links.blog.get(id);
+  };
   return (
     <>
       <p>Title</p>
@@ -13,14 +17,7 @@ export const CreateBlogEntry = () => {
       <p>Body</p>
       <textarea onChange={e => setBody(e.target.value)} value={body} cols={60} rows={20} />
       <p>
-        <button
-          onClick={async e => {
-            const id = await api.blog.create({ title, body });
-            window.location.hash = links.blog.get(id);
-          }}
-        >
-          Save
-        </button>
+        <button onClick={save}>Save</button>
         &nbsp;-&nbsp;
         <a href={links.index()}>Back</a>
       </p>
