@@ -1,7 +1,11 @@
 import { Links } from "./Links";
 import { Routes } from "./Routes";
 
-const encodeParameters = (parameters: any[]) => parameters.map(p => JSON.stringify(p)).map(p => encodeURIComponent(p)).join("/");
+const encodeParameters = (parameters: any[]) =>
+  parameters
+    .map(p => JSON.stringify(p))
+    .map(p => encodeURIComponent(p))
+    .join("/");
 
 export const createLinks = <T extends Routes>(routes: T, path = ""): Links<T> => {
   const result: any = {};
