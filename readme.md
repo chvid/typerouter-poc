@@ -1,7 +1,6 @@
 # TypeRouter - Proof of Concept
 
-A TypeScript-based router for React. The idea is to have a page hierarchy of an application defined as a map of route functions,
-where a route function is a function that takes some input parameters and returns a promise of a React node.
+A TypeScript-based router for React. The idea is to have a page hierarchy of an application defined as a map of route functions, where a route function is a function that takes some input parameters and returns a promise of a React node.
 
 Using TypeScript's type inference of the given route map together with type templating, the function createLinks returns a paralllel map of link functions that have same the input parameters as the route functions but returns a string containing a link to the particular route.
 
@@ -10,18 +9,18 @@ For example:
 ```typescript
 const routes = {
   index: async () => {
-    const entries = await api.blog.entries();
-    return <ListBlogEntriesPage entries={entries} />;
+    const posts = await api.blog.posts();
+    return <ListBlogPostsPage posts={posts} />;
   },
   blog: {
-    create: async () => <CreateBlogEntryPage />,
+    create: async () => <CreateBlogPostPage />,
     get: async (id: number) => {
-      const entry = await api.blog.get(id);
-      return <GetBlogEntryPage entry={entry} />;
+      const post = await api.blog.get(id);
+      return <GetBlogPostPage post={post} />;
     },
     edit: async (id: number) => {
-      const entry = await api.blog.get(id);
-      return <EditBlogEntryPage entry={entry} />;
+      const post = await api.blog.get(id);
+      return <EditBlogPostPage post={post} />;
     }
   }
 };

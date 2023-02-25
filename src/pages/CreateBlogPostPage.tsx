@@ -3,7 +3,7 @@ import React from "react";
 import { links } from "../routing";
 import { api } from "../api";
 
-export const CreateBlogEntryPage: React.FC = () => {
+export const CreateBlogPostPage: React.FC = () => {
   const [title, setTitle] = React.useState("");
   const [body, setBody] = React.useState("");
   const save = async () => {

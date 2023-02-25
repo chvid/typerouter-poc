@@ -1,24 +1,24 @@
 import { api } from "./api";
-import { CreateBlogEntryPage } from "./pages/CreateBlogEntryPage";
-import { EditBlogEntryPage } from "./pages/EditBlogEntryPage";
-import { GetBlogEntryPage } from "./pages/GetBlogEntryPage";
-import { ListBlogEntriesPage } from "./pages/ListBlogEntriesPage";
+import { CreateBlogPostPage } from "./pages/CreateBlogPostPage";
+import { EditBlogPostPage } from "./pages/EditBlogPostPage";
+import { GetBlogPostPage } from "./pages/GetBlogPostPage";
+import { ListBlogPostsPage } from "./pages/ListBlogPostsPage";
 import { createLinks } from "./typerouter/createLinks";
 
 export const routes = {
   index: async () => {
-    const entries = await api.blog.entries();
-    return <ListBlogEntriesPage entries={entries} />;
+    const posts = await api.blog.posts();
+    return <ListBlogPostsPage posts={posts} />;
   },
   blog: {
-    create: async () => <CreateBlogEntryPage />,
+    create: async () => <CreateBlogPostPage />,
     get: async (id: number) => {
-      const entry = await api.blog.get(id);
-      return <GetBlogEntryPage entry={entry} />;
+      const post = await api.blog.get(id);
+      return <GetBlogPostPage post={post} />;
     },
     edit: async (id: number) => {
-      const entry = await api.blog.get(id);
-      return <EditBlogEntryPage entry={entry} />;
+      const post = await api.blog.get(id);
+      return <EditBlogPostPage post={post} />;
     }
   }
 };
