@@ -3,7 +3,7 @@ import { Routes } from "./Routes";
 
 const encodeParameters = (parameters: any[]) =>
   parameters
-    .map(p => JSON.stringify(p))
+    .map(p => (p !== undefined ? JSON.stringify(p) : ""))
     .map(p => encodeURIComponent(p))
     .join("/");
 

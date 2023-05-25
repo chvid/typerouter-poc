@@ -21,7 +21,7 @@ const findMatch = (routes: Routes, path: string[]): { route?: RouteFunction; par
       parameters: path
         .slice(1)
         .map(decodeURIComponent)
-        .map(s => JSON.parse(s))
+        .map(s => (s == "" ? undefined : JSON.parse(s)))
     };
   }
   if (entry instanceof Object) {
@@ -63,8 +63,10 @@ export const TypeRouter: React.FC<{
       await invokeRoute(location.hash.substring(1));
     };
     window.addEventListener("hashchange", updateHash);
+    window.addEventListener("softRefresh", updateHash);
     return () => {
       window.removeEventListener("hashchange", updateHash);
+      window.removeEventListener("softRefresh", updateHash);
     };
   }, []);
 
